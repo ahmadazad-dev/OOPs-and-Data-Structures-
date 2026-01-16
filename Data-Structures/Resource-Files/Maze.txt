@@ -1,0 +1,41 @@
+12,34,56,78,90
+44,76,34,87,99
+88,65,12,19,50
+
+
+class Solution {
+public:
+
+    void DFS_traversal(int row_num, int col_num, vector<vector<bool>> &visited, vector<vector<char>> &grid, int n, int m){
+        
+        if(row_num<0 || col_num<0 || row_num>=n || col_num>=m || visited[row_num][col_num] || grid[row_num][col_num]!='1') return;
+
+        visited[row_num][col_num] = true;
+
+        DFS_traversal(row_num-1, col_num, visited, grid, n, m);//top
+        DFS_traversal(row_num+1, col_num, visited, grid, n, m);//bottom
+        DFS_traversal(row_num, col_num-1, visited, grid, n, m);//left
+        DFS_traversal(row_num, col_num+1, visited, grid, n, m);//right
+
+    }
+
+    int numIslands(vector<vector<char>>& grid) {
+        int numberof_islands = 0;
+        int n = grid.size();
+        int m = grid[0].size();
+
+        vector<vector<bool>> visited (n, vector<bool>(m, false));
+
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid[i][j]=='1' && visited[i][j]!=true){
+                    DFS_traversal(i,j,visited,grid,n,m);
+                    numberof_islands++;
+                }
+            }
+        }
+
+        return numberof_islands;
+
+    }
+};
